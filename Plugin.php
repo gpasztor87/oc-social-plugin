@@ -1,5 +1,6 @@
 <?php namespace Autumn\Social;
 
+use RainLab\User\Models\User;
 use System\Classes\PluginBase;
 
 /**
@@ -32,7 +33,10 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
-
+        User::extend(function($model) {
+            $model->hasMany['likes'] = ['Autumn\Social\Models\Like'];
+            $model->hasMany['comments'] = ['Autumn\Social\Models\Comment'];
+        });
     }
 
     /**

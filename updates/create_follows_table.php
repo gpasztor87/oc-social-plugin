@@ -3,22 +3,21 @@
 use Schema;
 use October\Rain\Database\Updates\Migration;
 
-class CreatePostsTable extends Migration
+class CreateFollowsTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('social_posts', function($table)
+    public function up() {
+        Schema::create('user_follows', function($table)
         {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('user_id')->unsigned()->index();
-            $table->string('slug')->index();
-            $table->text('content')->nullable();
+            $table->integer('followable_id')->unsigned()->index();
+            $table->string('followable_type')->index();
             $table->timestamps();
         });
     }
@@ -30,7 +29,7 @@ class CreatePostsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('social_posts');
+        Schema::dropIfExists('user_follows');
     }
 
 }

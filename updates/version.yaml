@@ -2,4 +2,5 @@
     - First version of Social
     - create_likes_table.php
     - create_comments_table.php
+    - create_follows_table.php
     - create_posts_table.php

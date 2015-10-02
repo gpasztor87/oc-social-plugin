@@ -9,7 +9,6 @@ use Model;
  */
 class Comment extends Model
 {
-
     use \October\Rain\Database\Traits\Validation;
 
     /**
@@ -36,6 +35,13 @@ class Comment extends Model
 
     public $belongsTo = [
         'user' => ['RainLab\User\Models\User']
+    ];
+
+    public $morphMany = [
+        'likes' => [
+            'Autumn\Social\Models\Like',
+            'name' => 'likeable'
+        ]
     ];
 
 } 

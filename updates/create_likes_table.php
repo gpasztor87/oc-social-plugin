@@ -3,7 +3,7 @@
 use Schema;
 use October\Rain\Database\Updates\Migration;
 
-class CreateLikesTAble extends Migration
+class CreateLikesTable extends Migration
 {
     /**
      * Run the migrations.

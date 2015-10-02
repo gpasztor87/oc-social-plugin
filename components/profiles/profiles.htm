@@ -1,0 +1,30 @@
+{% if profiles.count %}
+    <ul class="media-list">
+        {% for profile in profiles %}
+            <li>
+                <div class="media">
+                    <a href="#" class="pull-left">
+                        <img
+                            src="{{ profile.getAvatarThumb('50') }}"
+                            class="media-object img-rounded"
+                            alt="{{ profile.name }}"
+                        />
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            <a href="#">{{ profile.name }}</a>
+                        </h4>
+                        <h5>{{ profile.username }}</h5>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    <div class="pagination-container">
+        {% partial __SELF__ ~ "::pagination" %}
+    </div>
+{% else %}
+    <div class="panel-body">
+        <p>{{ __SELF__.noProfilesMessage }}</p>
+    </div>
+{% endif %}

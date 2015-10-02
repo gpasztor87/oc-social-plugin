@@ -1,0 +1,37 @@
+<section class="panel panel-default">
+    {% if profiles.count %}
+        <header class="panel-heading">
+            <strong>Profiles</strong>
+        </header>
+        <div class="panel-body">
+            {{ form_ajax('onSearch', { 'class': 'form-search', 'update': { '@profiles': '#profiles' } }) }}
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-search">
+                            <input
+                                type="text"
+                                name="search"
+                                class="form-control form-search"
+                                placeholder="Search for members"
+                                autocomplete="off"
+                            />
+                            <input
+                                class="btn btn-default btn-sm form-button-search"
+                                type="submit"
+                                value="Search"
+                            />
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+            {{ form_close() }}
+        </div>
+        <hr/>
+        <div id="profiles">
+            {% partial __SELF__ ~ '::profiles' %}
+         </div>
+    {% else %}
+        <p class="margin-top text-center">{{ __SELF__.noProfilesMessage }}</p>
+    {% endif %}
+</section>

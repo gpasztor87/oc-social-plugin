@@ -1,0 +1,12 @@
+{% set
+    paginationEnabled =
+    profiles.currentPage > 1 or
+    profiles.lastPage > 1 or
+    profiles.lastPage > profiles.currentPage
+%}
+
+<div class="row {{ paginationEnabled ? "enabled" : "disabled" }}">
+    <div class="col-md-12">
+        {% partial __SELF__ ~ "::pagination-list" records = profiles %}
+    </div>
+</div>

@@ -36,6 +36,39 @@ class Plugin extends PluginBase
         User::extend(function($model) {
             $model->hasMany['likes'] = ['Autumn\Social\Models\Like'];
             $model->hasMany['comments'] = ['Autumn\Social\Models\Comment'];
+
+            /*
+            * Default options
+            */
+            $model->addDynamicMethod('scopeListFrontEnd', function($query, $options) {
+                extract(array_merge([
+                    'page'    => 1,
+                    'perPage' => 10,
+                    'sort'    => 'name',
+                    'search'  => ''
+                ], $options));
+
+                /*
+                * Sorting
+                */
+                $allowedSortingOptions = ['created_at', 'updated_at'];
+
+                if (!in_array($sort, $allowedSortingOptions)) {
+                    $sort = $allowedSortingOptions[0];
+                }
+
+                $query->orderBy($sort, in_array($sort, ['name', 'created_at', 'updated_at']) ? 'desc' : 'asc');
+
+                /*
+                 * Search
+                 */
+                $search = trim($search);
+                if (strlen($search)) {
+                    $query->searchWhere($search, ['name', 'username']);
+                }
+
+                return $query->paginate($perPage, $page);
+            });
         });
     }
 
@@ -46,7 +79,9 @@ class Plugin extends PluginBase
      */
     public function registerComponents()
     {
-
+        return [
+            'Autumn\Social\Components\Profiles' => 'socialUserProfiles',
+        ];
     }
 
 }

@@ -7,6 +7,7 @@ use Model;
  */
 class Like extends Model
 {
+
     /**
      * @var string The database table used by the model.
      */

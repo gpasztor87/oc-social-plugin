@@ -9,6 +9,7 @@ use Uuid;
 class Post extends Model
 {
     use \October\Rain\Database\Traits\Validation;
+    use \Autumn\Social\Traits\RecordsActivity;
 
     /**
      * @var string The database table used by the model.

@@ -10,6 +10,7 @@ use Model;
 class Comment extends Model
 {
     use \October\Rain\Database\Traits\Validation;
+    use \Autumn\Social\Traits\RecordsActivity;
 
     /**
      * @var string The database table used by the model.
@@ -43,5 +44,12 @@ class Comment extends Model
             'name' => 'likeable'
         ]
     ];
+
+    /**
+     * Which events to record for the auth'd user.
+     *
+     * @var array
+     */
+    protected static $recordEvents = ['created'];
 
 } 

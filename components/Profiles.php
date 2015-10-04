@@ -4,7 +4,9 @@ use Auth;
 use Request;
 use Redirect;
 use Cms\Classes\ComponentBase;
+use Autumn\Social\Models\Follow;
 use RainLab\User\Models\User as UserModel;
+use ApplicationException;
 
 /**
  * Profiles component
@@ -116,6 +118,15 @@ class Profiles extends ComponentBase
     public function onSearch()
     {
         return $this->prepareProfileList();
+    }
+
+    public function onFollow()
+    {
+        if (!$user = Auth::getUser()) {
+            throw new ApplicationException('You should be logged in.');
+        }
+
+        Follow::toggle($user, UserModel::find(input('id')));
     }
 
 }

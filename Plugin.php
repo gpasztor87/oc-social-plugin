@@ -87,6 +87,7 @@ class Plugin extends PluginBase
     public function registerComponents()
     {
         return [
+            'Autumn\Social\Components\Profile'  => 'socialProfile',
             'Autumn\Social\Components\Profiles' => 'socialProfiles',
         ];
     }

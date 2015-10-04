@@ -1,0 +1,11 @@
+{% if image %}
+    <img src="{{ image.thumb('256', '256') }}"
+         alt="{{ user.name }}"
+         class="img-rounded profile-user-photo"
+         style="width: 240px; height: 240px"/>
+{% else %}
+    <img src="{{ user.getAvatarThumb('256', '256') }}"
+         alt="{{ user.name }}"
+         class="img-rounded"
+         style="width: 240px; height: 240px"/>
+{% endif %}

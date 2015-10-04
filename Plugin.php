@@ -36,6 +36,13 @@ class Plugin extends PluginBase
         User::extend(function($model) {
             $model->hasMany['likes'] = ['Autumn\Social\Models\Like'];
             $model->hasMany['comments'] = ['Autumn\Social\Models\Comment'];
+            $model->morphMany['followers'] = ['BBrand\Social\Models\Follow', 'name' => 'followable'];
+            $model->belongsToMany['follows'] = [
+                'RainLab\User\Models\User',
+                'table'    => 'user_follows',
+                'key'      => 'user_id',
+                'otherKey' => 'followable_id'
+            ];
 
             /*
             * Default options

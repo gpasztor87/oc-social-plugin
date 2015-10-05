@@ -27,4 +27,11 @@ class Like extends Model
         'user' => ['RainLab\User\Models\User']
     ];
 
+    public static function check($user, $likeable) {
+        return self::where('user_id', $user->id)
+            ->where('likeable_id', $likeable->id)
+            ->where('likeable_type', get_class($likeable))
+            ->count() > 0;
+    }
+
 } 

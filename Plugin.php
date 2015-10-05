@@ -1,7 +1,10 @@
 <?php namespace Autumn\Social;
 
-use RainLab\User\Models\User;
+use Str;
 use System\Classes\PluginBase;
+use RainLab\User\Models\User;
+use Autumn\Social\Models\Follow;
+use Autumn\Social\Models\Like;
 
 /**
  * Social Plugin Information File
@@ -36,7 +39,7 @@ class Plugin extends PluginBase
         User::extend(function($model) {
             $model->hasMany['likes'] = ['Autumn\Social\Models\Like'];
             $model->hasMany['comments'] = ['Autumn\Social\Models\Comment'];
-            $model->morphMany['followers'] = ['BBrand\Social\Models\Follow', 'name' => 'followable'];
+            $model->morphMany['followers'] = ['Autumn\Social\Models\Follow', 'name' => 'followable'];
             $model->belongsToMany['follows'] = [
                 'RainLab\User\Models\User',
                 'table'    => 'user_follows',
@@ -44,9 +47,6 @@ class Plugin extends PluginBase
                 'otherKey' => 'followable_id'
             ];
 
-            /*
-            * Default options
-            */
             $model->addDynamicMethod('scopeListFrontEnd', function($query, $options) {
                 extract(array_merge([
                     'page'    => 1,
@@ -76,6 +76,18 @@ class Plugin extends PluginBase
 
                 return $query->paginate($perPage, $page);
             });
+
+            $model->addDynamicMethod('beforeCrate', function() {
+                $this->slug = Str::slug($this->username);
+            });
+
+            $model->addDynamicMethod('isFollowing', function($user) use($model) {
+                return Follow::check($model, $user);
+            });
+
+            $model->addDynamicMethod('isLiking', function($likeable) use($model) {
+                return Like::check($model, $likeable);
+            });
         });
     }
 
@@ -89,6 +101,7 @@ class Plugin extends PluginBase
         return [
             'Autumn\Social\Components\Profile'  => 'socialProfile',
             'Autumn\Social\Components\Profiles' => 'socialProfiles',
+            'Autumn\Social\Components\Activities' => 'socialActivities',
         ];
     }
 

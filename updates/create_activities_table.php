@@ -5,7 +5,6 @@ use October\Rain\Database\Updates\Migration;
 
 class CreateActivitiesTable extends Migration
 {
-
     /**
      * Run the migrations.
      *

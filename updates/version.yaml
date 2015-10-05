@@ -5,3 +5,4 @@
     - create_follows_table.php
     - create_posts_table.php
     - create_activities_table.php
+    - users_add_slug_column.php

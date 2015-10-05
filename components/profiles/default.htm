@@ -35,3 +35,14 @@
         <p class="margin-top text-center">{{ __SELF__.noProfilesMessage }}</p>
     {% endif %}
 </section>
+<script>
+    function setFollow(id) {
+        $("#button_follow_" + id).addClass('hide');
+        $("#button_unfollow_" + id).removeClass('hide');
+    }
+
+    function setUnfollow(id) {
+        $("#button_follow_" + id).removeClass('hide');
+        $("#button_unfollow_" + id).addClass('hide');
+    }
+</script>

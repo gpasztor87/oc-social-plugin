@@ -3,6 +3,30 @@
         {% for profile in profiles %}
             <li>
                 <div class="media">
+                    {% if user and user.id != profile.id %}
+                        <div class="pull-right">
+                            <a
+                                href="javascript:;"
+                                id="button_follow_{{ profile.id }}"
+                                class="btn btn-sm btn-success{% if user.isFollowing(profile) %} hide{% endif %}"
+                                data-request="onFollow"
+                                data-toggle="button"
+                                data-request-data="id: {{ profile.id }}"
+                                data-request-success="setFollow({{ profile.id }})">
+                                Follow
+                            </a>
+                            <a
+                                href="javascript:;"
+                                id="button_unfollow_{{ profile.id }}"
+                                class="btn btn-sm btn-primary{% if user.isFollowing(profile) == false %} hide{% endif %}"
+                                data-request="onFollow"
+                                data-toggle="button"
+                                data-request-data="id: {{ profile.id }}"
+                                data-request-success="setUnfollow({{ profile.id }})">
+                                Unfollow
+                            </a>
+                        </div>
+                    {% endif %}
                     <a href="#" class="pull-left">
                         <img
                             src="{{ profile.getAvatarThumb('50') }}"

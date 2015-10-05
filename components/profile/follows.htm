@@ -4,7 +4,7 @@
     </div>
     <div class="panel-body">
         {% for follow in profile.follows %}
-            <a href="{{ follow.redirectUrl }}">
+            <a href="{{ this.page.baseFileName|page({ slug: follow.slug })  }}">
                 <img
                     src="{{ follow.getAvatarThumb('32') }}"
                     class="img-rounded img_margin"

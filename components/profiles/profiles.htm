@@ -27,7 +27,7 @@
                             </a>
                         </div>
                     {% endif %}
-                    <a href="#" class="pull-left">
+                    <a href="{{ profile.url }}" class="pull-left">
                         <img
                             src="{{ profile.getAvatarThumb('50') }}"
                             class="media-object img-rounded"
@@ -35,7 +35,7 @@
                     </a>
                     <div class="media-body">
                         <h4 class="media-heading">
-                            <a href="#">{{ profile.name }}</a>
+                            <a href="{{ profile.url }}">{{ profile.name }}</a>
                         </h4>
                         <h5>{{ profile.username }}</h5>
                     </div>

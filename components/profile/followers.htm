@@ -1,0 +1,18 @@
+{% if profile.followers.count %}
+    <div class="panel-heading">
+        <strong>User</strong> followers
+    </div>
+    <div class="panel-body">
+        {% for follower in profile.followers %}
+            <a href="{{ follower.user.redirectUrl }}">
+                <img
+                    src="{{ follower.user.getAvatarThumb('32') }}"
+                    class="img-rounded img_margin"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="<strong>{{ follower.user.name }}</strong><br>{{ follower.user.login }}"
+                    alt="{{ follower.user.name }}"/>
+            </a>
+        {% endfor %}
+    </div>
+{% endif %}

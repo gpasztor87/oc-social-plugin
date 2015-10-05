@@ -81,6 +81,15 @@ class Plugin extends PluginBase
                 $this->slug = Str::slug($this->username);
             });
 
+            $model->addDynamicMethod('setUrl', function($pageName, $controller) use($model) {
+                $params = [
+                    'id'   => $model->id,
+                    'slug' => $model->slug
+                ];
+
+                return $model->url = $controller->pageUrl($pageName, $params);
+            });
+
             $model->addDynamicMethod('isFollowing', function($user) use($model) {
                 return Follow::check($model, $user);
             });

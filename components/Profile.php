@@ -2,15 +2,32 @@
 
 use Auth;
 use Cms\Classes\ComponentBase;
+use RainLab\User\Models\User as UserModel;
 
 class Profile extends ComponentBase
 {
     use \Autumn\Social\Traits\ComponentUtils;
 
     /**
+     * The user model used for display.
+     *
+     * @var \RainLab\User\Models\User
+     */
+    public $profile;
+
+    /**
      * @var bool Has the model been bound.
      */
     protected $deferredBinding = false;
+
+    /**
+     * Supported file types.
+     *
+     * @var array
+     */
+    public $fileTypes;
+
+    public $maxSize;
 
     /**
      * Returns information about this component, including name and description.
@@ -66,7 +83,17 @@ class Profile extends ComponentBase
      */
     public function onRun()
     {
+        $this->profile = $this->page['profile'] = $this->getProfile();
 
+        if ($result = $this->checkUploadAction()) {
+            return $result;
+        }
+    }
+
+    protected function getProfile()
+    {
+        $slug = $this->property('slug');
+        return UserModel::whereSlug($slug)->first();
     }
 
     public function onUploadAvatar()

@@ -3,6 +3,7 @@
 use Auth;
 use Request;
 use Redirect;
+use Cms\Classes\Page;
 use Cms\Classes\ComponentBase;
 use Autumn\Social\Models\Follow;
 use RainLab\User\Models\User as UserModel;
@@ -19,6 +20,13 @@ class Profiles extends ComponentBase
      * @var Collection
      */
     public $profiles;
+
+    /**
+     * Reference to the page name for linking to profiles.
+     *
+     * @var string
+     */
+    public $profilePage;
 
     /**
      * Message to display when there are no profiles.
@@ -50,6 +58,11 @@ class Profiles extends ComponentBase
                 'type'        => 'string',
                 'default'     => 'No users found'
             ],
+            'profilePage' => [
+                'title'       => 'Profile page',
+                'description' => 'Name of the profile page file.',
+                'type'        => 'dropdown'
+            ],
             'profilesPerPage' => [
                 'title'             => 'Profiles per page',
                 'default'           => '10',
@@ -60,13 +73,26 @@ class Profiles extends ComponentBase
         ];
     }
 
+    public function getProfilePageOptions()
+    {
+        return Page::withComponent('socialProfile')->sortBy('baseFileName')->lists('baseFileName', 'baseFileName');
+    }
+
     /**
      * Executed when this component is bound to a page or layout, part of
      * the page life cycle.
      */
     public function onRun()
     {
+        $this->prepareVars();
+
         return $this->prepareProfileList();
+    }
+
+    protected function prepareVars()
+    {
+        $this->noProfilesMessage = $this->property('noProfilesMessage');
+        $this->profilePage = $this->property('profilePage');
     }
 
     /**
@@ -91,6 +117,13 @@ class Profiles extends ComponentBase
             'search' => $searchString,
         ]);
 
+        /*
+         * Add a "url" helper attribute for linking to each profile
+         */
+        $profiles->each(function($profile) {
+            $profile->setUrl($this->profilePage, $this->controller);
+        });
+
         $this->page['profiles'] = $this->profiles = $profiles;
 
         /*
@@ -109,9 +142,6 @@ class Profiles extends ComponentBase
             }
 
             $this->page['paginationUrl'] = $paginationUrl;
-        }
-        else {
-            $this->noProfilesMessage = $this->property('noProfilesMessage');
         }
     }
 

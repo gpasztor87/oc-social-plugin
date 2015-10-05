@@ -1,0 +1,36 @@
+<div class="col-md-9">
+    <div class="panel panel-default panel-profile">
+        {% partial __SELF__  ~ '::header' profile = profile %}
+        <div class="panel-body">
+
+            <div class="panel-profile-controls">
+                <div class="statistics pull-left">
+                    <div class="pull-left entry">
+                        <h3 class="count">{{ profile.followers.count }}</h3>
+                        <span class="title">Followers</span>
+                    </div>
+                    <div class="pull-left entry">
+                        <h3 class="count">{{ profile.follows.count }}</h3>
+                        <span class="title">Follows</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls controls-account pull-right">
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="profile-sidebar-container col-md-3">
+    <div class="panel panel-default follower" id="profile-follower-panel">
+        {% partial __SELF__ ~ '::followers' %}
+    </div>
+
+    <div class="panel panel-default follower" id="profile-following-panel">
+        {% partial __SELF__ ~ '::follows' %}
+    </div>
+</div>

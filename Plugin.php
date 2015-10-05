@@ -110,7 +110,8 @@ class Plugin extends PluginBase
         return [
             'Autumn\Social\Components\Profile'  => 'socialProfile',
             'Autumn\Social\Components\Profiles' => 'socialProfiles',
-            'Autumn\Social\Components\Activities' => 'socialActivities',
+            'Autumn\Social\Components\ActivityStream' => 'socialActivityStream',
+            'Autumn\Social\Components\WallStream' => 'socialWallStream',
         ];
     }
 

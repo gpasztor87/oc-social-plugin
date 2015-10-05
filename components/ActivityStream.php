@@ -6,7 +6,7 @@ use Autumn\Social\Models\Activity;
 use RainLab\User\Models\User as UserModel;
 use ApplicationException;
 
-class Activities extends ComponentBase
+class ActivityStream extends ComponentBase
 {
     /**
      * A collection of activities to display.

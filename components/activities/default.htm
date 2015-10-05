@@ -14,7 +14,9 @@
                                 alt="{{ activity.user.name }}" />
 
                             <div class="media-body">
-
+                                {% partial __SELF__ ~ '::type/' ~ activity.name activity = activity %}
+                                <br/>
+                                <time class="time" datetime="{{ activity.created_at }}">{{ activity.created_at }}</time>
                             </div>
                         </div>
                     </li>

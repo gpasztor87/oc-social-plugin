@@ -77,7 +77,7 @@ class Plugin extends PluginBase
                 return $query->paginate($perPage, $page);
             });
 
-            $model->addDynamicMethod('beforeCrate', function() {
+            $model->addDynamicMethod('beforeCreate', function() {
                 $this->slug = Str::slug($this->username);
             });
 
@@ -85,8 +85,8 @@ class Plugin extends PluginBase
                 return Follow::check($model, $user);
             });
 
-            $model->addDynamicMethod('isLiking', function($likeable) use($model) {
-                return Like::check($model, $likeable);
+            $model->addDynamicMethod('isLiking', function($target) use($model) {
+                return Like::check($model, $target);
             });
         });
     }

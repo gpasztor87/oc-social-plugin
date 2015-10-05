@@ -52,4 +52,9 @@ class Comment extends Model
      */
     protected static $recordEvents = ['created'];
 
+    public function getCommentableAttribute()
+    {
+        return call_user_func([$this->commentable_type, 'find'], $this->commentable_id);
+    }
+
 } 

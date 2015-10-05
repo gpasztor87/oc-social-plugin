@@ -88,7 +88,8 @@ class Activities extends ComponentBase
                 throw new ApplicationException('You should be logged in.');
             }
 
-            $users = $user->followers()->lists('id');
+            $users = $user->follows->lists('id');
+
             $activities = Activity::whereIn('user_id', $users)
                 ->orderBy('created_at', 'desc')
                 ->paginate($this->property('limit'));

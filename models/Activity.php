@@ -13,6 +13,13 @@ class Activity extends Model
     public $table = 'social_activities';
 
     /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [];
+
+    /**
      * @var array Relations
      */
     public $belongsTo = [
@@ -20,5 +27,10 @@ class Activity extends Model
     ];
 
     public $morphTo = ['subject'];
+
+    public function getSubjectAttribute()
+    {
+        return call_user_func([$this->subject_type, 'find'], $this->subject_id);
+    }
 
 }

@@ -34,4 +34,9 @@ class Like extends Model
             ->count() > 0;
     }
 
+    public function getLikeableAttribute()
+    {
+        return call_user_func([$this->likeable_type, 'find'], $this->likeable_id);
+    }
+
 } 

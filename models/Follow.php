@@ -8,6 +8,8 @@ use Model;
  */
 class Follow extends Model
 {
+    use \Autumn\Social\Traits\RecordsActivity;
+
     /**
      * @var string The database table used by the model.
      */
@@ -29,6 +31,13 @@ class Follow extends Model
     public $belongsTo = [
         'user' => ['RainLab\User\Models\User']
     ];
+
+    /**
+     * Which events to record for the auth'd user.
+     *
+     * @var array
+     */
+    protected static $recordEvents = ['created'];
 
     public static function toggle($user, $followable)
     {
@@ -85,6 +94,11 @@ class Follow extends Model
          * Extensibility
          */
         Event::fire('social.unfollow', [$follow, $followable]);
+    }
+
+    public function getFollowableAttribute()
+    {
+        return call_user_func([$this->followable_type, 'find'], $this->followable_id);
     }
 
 } 

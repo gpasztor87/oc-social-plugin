@@ -13,7 +13,7 @@ trait RecordsActivity
     protected static function bootRecordsActivity()
     {
         foreach (static::getModelEvents() as $event) {
-            static::$event(function ($model) use ($event) {
+            static::$event(function($model) use($event) {
                 $model->recordActivity($event);
             });
         }
@@ -28,7 +28,7 @@ trait RecordsActivity
     public function recordActivity($event)
     {
         Activity::create([
-            'subject_id' => $this->id,
+            'subject_id' => $this->getKey(),
             'subject_type' => get_class($this),
             'name' => $this->getActivityName($this, $event),
             'user_id' => $this->user_id
@@ -60,8 +60,13 @@ trait RecordsActivity
         }
 
         return [
-            'created', 'deleted', 'updated'
+            'created', 'updated'
         ];
+    }
+
+    public function beforeDelete()
+    {
+        Activity::where('subject_id', $this->id)->where('subject_type', get_class($this))->delete();
     }
 
 }

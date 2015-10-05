@@ -8,6 +8,7 @@ use Cms\Classes\Page;
 use Cms\Classes\ComponentBase;
 use RainLab\User\Models\User as UserModel;
 use Autumn\Social\Models\Post as PostModel;
+use Autumn\Social\Models\Like;
 use ValidationException;
 use ApplicationException;
 
@@ -115,6 +116,17 @@ class WallStream extends ComponentBase
         $this->profilePage = $this->property('profilePage');
     }
 
+    /**
+     * Returns the logged in user, if available.
+     */
+    public function user()
+    {
+        if (!Auth::check()) {
+            return null;
+        }
+
+        return Auth::getUser();
+    }
 
     protected function prepareWallStream()
     {
@@ -179,7 +191,8 @@ class WallStream extends ComponentBase
         return $posts;
     }
 
-    public function onCreatePost() {
+    public function onCreatePost()
+    {
         if (!$user = Auth::getUser()) {
             throw new ApplicationException('You should be logged in.');
         }
@@ -201,7 +214,8 @@ class WallStream extends ComponentBase
         $this->prepareWallStream();
     }
 
-    public function onUpdatePost() {
+    public function onUpdatePost()
+    {
         if (!$user = Auth::getUser()) {
             throw new ApplicationException('You should be logged in.');
         }
@@ -229,6 +243,18 @@ class WallStream extends ComponentBase
         $this->page['post'] = $post;
 
         $this->prepareWallStream();
+    }
+
+    public function onLikePost()
+    {
+        if (!$user = Auth::getUser()) {
+            throw new ApplicationException('You should be logged in.');
+        }
+
+        $post = PostModel::find(input('id'));
+
+        Like::toggle($user, $post);
+        return ['count' => $post->likes->count()];
     }
 
 }

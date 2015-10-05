@@ -21,5 +21,28 @@
         <hr/>
         <div class="content">{{ post.content|raw }}</div>
 
+        <div class="wall-entry-controls">
+            <a
+                href="javascript:;"
+                id="post-{{ post.id }}-like"
+                class="like likeAnchor"
+                {% if __SELF__.user.isLiking(post) %}style="display:none"{% endif %}
+                data-request="onLikePost"
+                data-request-success="$('#post-{{ post.id }}-likecount').html(data.count);$('#post-{{ post.id }}-dislike').show();$('#post-{{ post.id }}-like').hide();"
+                data-request-data="id: {{ post.id }}">
+                Like
+            </a>
+            <a
+                href="javascript:;"
+                id="post-{{ post.id }}-dislike"
+                class="unlike likeAnchor"
+                {% if not __SELF__.user.isLiking(post) %}style="display:none"{% endif %}
+                data-request="onLikePost"
+                data-request-success="$('#post-{{ post.id }}-likecount').html(data.count);$('#post-{{ post.id }}-dislike').hide();$('#post-{{ post.id }}-like').show();"
+                data-request-data="id: {{ post.id }}">
+                Dislike
+            </a>
+            (<span id="post-{{ post.id }}-likecount">{{ post.likes.count }}</span>)
+        </div>
     </div>
 </div>

@@ -1,6 +1,6 @@
 {% if posts.count %}
     {% for post in posts %}
-        <div data-post-id="{{ post.id }}" id="post-{{ post.id }}">
+        <div class="wall-entry" data-post-id="{{ post.id }}" id="post-{{ post.id }}">
             {% partial __SELF__ ~ '::post' post = post %}
         </div>
     {% endfor %}

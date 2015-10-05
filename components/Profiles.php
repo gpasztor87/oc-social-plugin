@@ -96,7 +96,7 @@ class Profiles extends ComponentBase
     }
 
     /**
-     * Returns the logged in user, if available
+     * Returns the logged in user, if available.
      */
     public function user()
     {

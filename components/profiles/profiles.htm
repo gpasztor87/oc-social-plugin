@@ -3,12 +3,12 @@
         {% for profile in profiles %}
             <li>
                 <div class="media">
-                    {% if user and user.id != profile.id %}
+                    {% if __SELF__.user and __SELF__.user.id != profile.id %}
                         <div class="pull-right">
                             <a
                                 href="javascript:;"
                                 id="button_follow_{{ profile.id }}"
-                                class="btn btn-sm btn-success{% if user.isFollowing(profile) %} hide{% endif %}"
+                                class="btn btn-sm btn-success{% if __SELF__.user.isFollowing(profile) %} hide{% endif %}"
                                 data-request="onFollow"
                                 data-toggle="button"
                                 data-request-data="id: {{ profile.id }}"
@@ -18,7 +18,7 @@
                             <a
                                 href="javascript:;"
                                 id="button_unfollow_{{ profile.id }}"
-                                class="btn btn-sm btn-primary{% if user.isFollowing(profile) == false %} hide{% endif %}"
+                                class="btn btn-sm btn-primary{% if __SELF__.user.isFollowing(profile) == false %} hide{% endif %}"
                                 data-request="onFollow"
                                 data-toggle="button"
                                 data-request-data="id: {{ profile.id }}"

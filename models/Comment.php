@@ -1,7 +1,6 @@
 <?php namespace Autumn\Social\Models;
 
 use Auth;
-use Event;
 use Model;
 
 /**
@@ -51,6 +50,19 @@ class Comment extends Model
      * @var array
      */
     protected static $recordEvents = ['created'];
+
+    public function canEdit($user = null)
+    {
+        if ($user === null) {
+            $user = Auth::getUser();
+        }
+
+        if (!$user) {
+            return false;
+        }
+
+        return $this->user_id == $user->id;
+    }
 
     public function getCommentableAttribute()
     {

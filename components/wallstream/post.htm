@@ -1,0 +1,25 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="media">
+
+            <a href="{{ post.user.url }}" class="pull-left">
+                <img
+                    src="{{ post.user.getAvatarThumb('40') }}"
+                    class="media-object img-rounded user-image"
+                    alt="{{ post.user.name }}"/>
+            </a>
+
+            <div class="media-body">
+                <h4 class="media-heading">
+                    <a href="{{ post.user.url }}">{{ post.user.name }}</a>
+                    <time class="time" datetime="{{ post.created_at }}">{{ post.created_at }}</time>
+                </h4>
+                <h5>{{ post.user.login }}</h5>
+            </div>
+        </div>
+
+        <hr/>
+        <div class="content">{{ post.content|raw }}</div>
+
+    </div>
+</div>

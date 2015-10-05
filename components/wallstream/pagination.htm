@@ -1,0 +1,12 @@
+{% set
+    paginationEnabled =
+    posts.currentPage > 1 or
+    posts.lastPage > 1 or
+    posts.lastPage > posts.currentPage
+%}
+
+<div class="row {{ paginationEnabled ? "enabled" : "disabled" }}">
+    <div class="col-md-12">
+        {% partial __SELF__ ~ "::pagination-list" records = posts %}
+    </div>
+</div>

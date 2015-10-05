@@ -72,10 +72,10 @@ class ActivityStream extends ComponentBase
     public function onRun()
     {
         $this->activityType = $this->property('type');
-        $this->prepareActivitiesList();
+        return $this->prepareActivityStream();
     }
 
-    protected function prepareActivitiesList()
+    protected function prepareActivityStream()
     {
         if ($this->activityType == 'user') {
             $user = UserModel::whereSlug($this->property('slug'))->first();

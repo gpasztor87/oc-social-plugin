@@ -1,0 +1,27 @@
+{% if posts.count %}
+    {% for post in posts %}
+        <div data-post-id="{{ post.id }}" id="post-{{ post.id }}">
+            {% partial __SELF__ ~ '::post' post = post %}
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="emptyStreamMessage">
+        {% if __SELF__.wallType == 'user' %}
+            {% if user and user.id == profile.id %}
+                <div class="placeholder placeholder-empty-stream">
+                    <b>Your profile stream is still empty</b><br>Get started and post something...
+                </div>
+            {% else %}
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <b>This profile stream is still empty</b>
+                    </div>
+                </div>
+            {% endif %}
+        {% elseif __SELF__.wallType == 'dashboard' %}
+            <div class="placeholder">
+                <b>Your dashboard is empty!</b><br>Post something on your profile!
+            </div>
+        {% endif %}
+    </div>
+{% endif %}

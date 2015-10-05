@@ -1,5 +1,6 @@
 <?php namespace Autumn\Social\Models;
 
+use Auth;
 use Model;
 use Uuid;
 
@@ -109,6 +110,19 @@ class Post extends Model
             $query->whereIn('user_id', $users);
         }
         return $query->paginate($perPage, $page);
+    }
+
+    public function canEdit($user = null)
+    {
+        if ($user === null) {
+            $user = Auth::getUser();
+        }
+
+        if (!$user) {
+            return false;
+        }
+
+        return $this->user_id == $user->id;
     }
 
     /**

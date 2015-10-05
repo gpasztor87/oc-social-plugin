@@ -1,0 +1,16 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+        {{ form_ajax('onCreatePost', { 'update': { '@posts': '#wallStream' } }) }}
+        <div class="form-group">
+            <div data-control="richeditor">
+                <textarea
+                    name="content"
+                    class="form-control"
+                    rows="1"
+                    placeholder="Whats on your mind?"></textarea>
+            </div>
+        </div>
+            <input type="submit" class="btn btn-info" value="Submit" />
+        {{ form_close() }}
+    </div>
+</div>

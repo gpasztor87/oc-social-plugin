@@ -2,7 +2,9 @@
 
 use Auth;
 use Cms\Classes\ComponentBase;
+use Autumn\Social\Models\Follow;
 use RainLab\User\Models\User as UserModel;
+use ApplicationException;
 
 class Profile extends ComponentBase
 {
@@ -83,17 +85,32 @@ class Profile extends ComponentBase
      */
     public function onRun()
     {
-        $this->profile = $this->page['profile'] = $this->getProfile();
+        $this->prepareVars();
 
         if ($result = $this->checkUploadAction()) {
             return $result;
         }
     }
 
+    protected function prepareVars()
+    {
+        $this->profile = $this->page['profile'] = $this->getProfile();
+    }
+
     protected function getProfile()
     {
         $slug = $this->property('slug');
         return UserModel::whereSlug($slug)->first();
+    }
+
+    public function onFollow()
+    {
+        if (!$user = Auth::getUser()) {
+            throw new ApplicationException('You should be logged in.');
+        }
+
+        Follow::toggle($user, UserModel::find(input('id')));
+        $this->prepareVars();
     }
 
     public function onUploadAvatar()

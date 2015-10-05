@@ -1,18 +1,20 @@
 {% if profile.follows.count %}
-    <div class="panel-heading">
-        <strong>Following</strong> users
-    </div>
-    <div class="panel-body">
-        {% for follow in profile.follows %}
-            <a href="{{ this.page.baseFileName|page({ slug: follow.slug })  }}">
-                <img
-                    src="{{ follow.getAvatarThumb('32') }}"
-                    class="img-rounded img_margin"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="<strong>{{ follow.name }}</strong><br>{{ follow.login }}"
-                    alt="{{ follow.name }}"/>
-            </a>
-        {% endfor %}
+    <div class="panel panel-default follower">
+        <div class="panel-heading">
+            <strong>Following</strong> users
+        </div>
+        <div class="panel-body">
+            {% for follow in profile.follows %}
+                <a href="{{ this.page.baseFileName|page({ slug: follow.slug })  }}">
+                    <img
+                        src="{{ follow.getAvatarThumb('32') }}"
+                        class="img-rounded img_margin"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="<strong>{{ follow.name }}</strong><br>{{ follow.login }}"
+                        alt="{{ follow.name }}"/>
+                </a>
+            {% endfor %}
+        </div>
     </div>
 {% endif %}

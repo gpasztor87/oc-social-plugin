@@ -17,20 +17,66 @@
             </div>
 
             <div class="controls controls-account pull-right">
-
+                {% if user and user.id != profile.id %}
+                <div class="pull-right">
+                    <a
+                        href="javascript:;"
+                        id="button_follow_{{ profile.id }}"
+                        class="btn btn-sm btn-success{% if user.isFollowing(profile) %} hide{% endif %}"
+                        data-request="onFollow"
+                        data-toggle="button"
+                        data-request-data="id: {{ profile.id }}"
+                        data-request-success="setFollow({{ profile.id }})"
+                        data-request-update="'{{ __SELF__ }}::followers': '#profile-follower-panel'">
+                        Follow
+                    </a>
+                    <a
+                        href="javascript:;"
+                        id="button_unfollow_{{ profile.id }}"
+                        class="btn btn-sm btn-primary{% if user.isFollowing(profile) == false %} hide{% endif %}"
+                        data-request="onFollow"
+                        data-toggle="button"
+                        data-request-data="id: {{ profile.id }}"
+                        data-request-success="setUnfollow({{ profile.id }})"
+                        data-request-update="'{{ __SELF__ }}::followers': '#profile-follower-panel'">
+                        Unfollow
+                    </a>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
-
+    <div class="row">
+        <div class="profile-nav-container col-md-3">
+            {% partial __SELF__ ~ '::menu' %}
+        </div>
+        <div class="col-md-9">
+            {% if this.param.page == 'about' %}
+                {% partial __SELF__ ~ '::about' %}
+            {% endif %}
+        </div>
+    </div>
 
 </div>
 
 <div class="profile-sidebar-container col-md-3">
-    <div class="panel panel-default follower" id="profile-follower-panel">
+    <div id="profile-follower-panel">
         {% partial __SELF__ ~ '::followers' %}
     </div>
 
-    <div class="panel panel-default follower" id="profile-following-panel">
+    <div id="profile-following-panel">
         {% partial __SELF__ ~ '::follows' %}
     </div>
 </div>
+
+<script>
+    function setFollow(id) {
+        $("#button_follow_" + id).addClass('hide');
+        $("#button_unfollow_" + id).removeClass('hide');
+    }
+
+    function setUnfollow(id) {
+        $("#button_follow_" + id).removeClass('hide');
+        $("#button_unfollow_" + id).addClass('hide');
+    }
+</script>

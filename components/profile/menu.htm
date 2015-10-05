@@ -1,0 +1,13 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <strong>Profile</strong> menu
+    </div>
+    <div class="list-group">
+        <a href="{{ this.page.baseFileName|page({ page: null }) }}" class="list-group-item{% if this.param.page == null%} active{% endif %}">
+            <span>Stream</span>
+        </a>
+        <a href="{{ this.page.baseFileName|page({ page: 'about' }) }}" class="list-group-item{% if this.param.page == 'about' %} active{% endif %}">
+            <span>About</span>
+        </a>
+    </div>
+</div>

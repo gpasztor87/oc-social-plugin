@@ -1,18 +1,20 @@
 {% if profile.followers.count %}
-    <div class="panel-heading">
-        <strong>User</strong> followers
-    </div>
-    <div class="panel-body">
-        {% for follower in profile.followers %}
-            <a href="{{ this.page.baseFileName|page({ slug: follower.user.slug }) }}">
-                <img
-                    src="{{ follower.user.getAvatarThumb('32') }}"
-                    class="img-rounded img_margin"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="<strong>{{ follower.user.name }}</strong><br>{{ follower.user.login }}"
-                    alt="{{ follower.user.name }}"/>
-            </a>
-        {% endfor %}
+    <div class="panel panel-default follower">
+        <div class="panel-heading">
+            <strong>User</strong> followers
+        </div>
+        <div class="panel-body">
+            {% for follower in profile.followers %}
+                <a href="{{ this.page.baseFileName|page({ slug: follower.user.slug }) }}">
+                    <img
+                        src="{{ follower.user.getAvatarThumb('32') }}"
+                        class="img-rounded img_margin"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="<strong>{{ follower.user.name }}</strong><br>{{ follower.user.login }}"
+                        alt="{{ follower.user.name }}"/>
+                </a>
+            {% endfor %}
+        </div>
     </div>
 {% endif %}

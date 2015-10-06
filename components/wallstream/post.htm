@@ -43,6 +43,20 @@
                 Dislike
             </a>
             (<span id="post-{{ post.id }}-likecount">{{ post.likes.count }}</span>)
+            &nbsp;·&nbsp;
+            <a
+                href="javascript:;"
+                onclick="$('#post-{{ post.id }}-comments').parent().show();$('#post-{{ post.id }}-comment-content').focus();return false;">
+                Comment
+            </a>
         </div>
+
+        <div class="well well-small"{% if not post.comments.count %} style="display: none;"{% endif %}>
+            <div class="comment" id="post-{{ post.id }}-comments">
+                {% partial __SELF__ ~ '::comments' post = post %}
+            </div>
+            {% partial __SELF__ ~ '::create_comment' post = post %}
+        </div>
+
     </div>
 </div>

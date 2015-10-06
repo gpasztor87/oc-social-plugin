@@ -112,6 +112,18 @@ class Post extends Model
         return $query->paginate($perPage, $page);
     }
 
+    public function addComment($content)
+    {
+        return Comment::add($content, $this);
+    }
+
+    public function afterDelete()
+    {
+        foreach($this->comments as $comment) {
+            $comment->delete();
+        }
+    }
+
     public function canEdit($user = null)
     {
         if ($user === null) {

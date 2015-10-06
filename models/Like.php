@@ -48,7 +48,8 @@ class Like extends Model
         }
     }
 
-    public static function check($user, $likeable) {
+    public static function check($user, $likeable)
+    {
         return self::where('user_id', $user->id)
             ->where('likeable_id', $likeable->id)
             ->where('likeable_type', get_class($likeable))

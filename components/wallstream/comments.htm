@@ -1,0 +1,83 @@
+{% for comment in post.comments %}
+    <div class="media">
+
+        {% if comment.user.id == __SELF__.user.id %}
+            <ul class="nav nav-pills preferences">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu pull-right">
+                        <li>
+                            <a
+                                href="javascript:;"
+                                data-request="{{ __SELF__ }}::onDeleteComment"
+                                data-request-confirm="Are you sure want to delete this comment?"
+                                data-request-update="'{{ __SELF__ }}::posts': '#wallStream'"
+                                data-request-data="comment: {{ comment.id }}">
+                                <i class="fa fa-trash-o"></i> Delete
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        {% endif %}
+
+        <a class="pull-left" href="{{ comment.user.url }}">
+            <img
+                src="{{ comment.user.getAvatarThumb('40') }}"
+                class="media-object img-rounded user-image"
+                alt="{{ comment.user.name }}" />
+        </a>
+        <div class="media-body">
+            <h4 class="media-heading">
+                <a href="{{ comment.user.url }}">{{ comment.user.name }}</a>
+                <time class="time" datetime="{{ comment.created_at }}">{{ comment.created_at }}</time>
+            </h4>
+            <span class="content">{{ comment.content|raw }}</span>
+
+            <div class="wall-entry-controls">
+                <a
+                    href="javascript:;"
+                    id="comment-{{ comment.id }}-like"
+                    class="like likeAnchor"
+                    {% if __SELF__.user.isLiking(comment) %}style="display:none"{% endif %}
+                    data-request="onLikeComment"
+                    data-request-success="$('#comment-{{ comment.id }}-likecount').html(data.count);$('#comment-{{ comment.id }}-dislike').show();$('#comment-{{ comment.id}}-like').hide();"
+                    data-request-data="id: {{ comment.id }}">
+                    Like
+                </a>
+                <a
+                    href="javascript:;"
+                    id="comment-{{ comment.id }}-dislike"
+                    class="like likeAnchor"
+                    {% if not __SELF__.user.isLiking(comment) %}style="display:none"{% endif %}
+                    data-request="onLikeComment"
+                    data-request-success="$('#comment-{{ comment.id }}-likecount').html(data.count);$('#comment-{{ comment.id }}-dislike').hide();$('#comment-{{ comment.id}}-like').show();"
+                    data-request-data="id: {{ comment.id }}">
+                    Dislike
+                </a>
+                (<span id="comment-{{ comment.id }}-likecount">{{ comment.likes.count }}</span>)
+            </div>
+        </div>
+        <hr/>
+    </div>
+{% endfor %}
+
+{% put scripts %}
+<script>
+    $(document).render(function() {
+        $('.comment .media').mouseover(function() {
+            var element = $(this).find('.preferences')
+            element.show()
+        });
+
+        $('.comment .media').mouseout(function() {
+            var element = $(this).find('.preferences')
+            if (!element.find('li').hasClass('open')) {
+                element.hide()
+            }
+        })
+    })
+</script>
+{% endput %}

@@ -51,6 +51,23 @@ class Comment extends Model
      */
     protected static $recordEvents = ['created'];
 
+    public static function add($content, $commentable)
+    {
+        $comment = new Comment;
+        $comment->content = $content;
+        $comment->user = Auth::getUser();
+        $comment->commentable_id = $commentable->id;
+        $comment->commentable_type = get_class($commentable);
+        $comment->save();
+    }
+
+    public function afterDelete()
+    {
+        foreach($this->likes as $like) {
+            $like->delete();
+        }
+    }
+
     public function canEdit($user = null)
     {
         if ($user === null) {

@@ -7,6 +7,7 @@ use Validator;
 use Cms\Classes\Page;
 use Cms\Classes\ComponentBase;
 use RainLab\User\Models\User as UserModel;
+use Autumn\Social\Models\Comment as CommentModel;
 use Autumn\Social\Models\Post as PostModel;
 use Autumn\Social\Models\Like;
 use ValidationException;
@@ -255,6 +256,56 @@ class WallStream extends ComponentBase
 
         Like::toggle($user, $post);
         return ['count' => $post->likes->count()];
+    }
+
+    public function onCreateComment()
+    {
+        if (!$user = Auth::getUser()) {
+            throw new ApplicationException('You should be logged in.');
+        }
+
+        $rules = [
+            'content' => 'required'
+        ];
+
+        $validation = Validator::make(input(), $rules);
+        if ($validation->fails()) {
+            throw new ValidationException($validation);
+        }
+
+        $post = PostModel::find(input('post_id'));
+        $post->addComment(input('content'));
+
+        $this->prepareWallStream();
+    }
+
+    public function onLikeComment()
+    {
+        if (!$user = Auth::getUser()) {
+            throw new ApplicationException('You should be logged in.');
+        }
+
+        $comment = CommentModel::find(input('id'));
+
+        Like::toggle($user, $comment);
+        return ['count' => $comment->likes->count()];
+    }
+
+    public function onDeleteComment()
+    {
+        if (!$user = Auth::getUser()) {
+            throw new ApplicationException('You should be logged in.');
+        }
+
+        $comment = CommentModel::find(input('comment'));
+
+        if (!$comment->canEdit()) {
+            throw new ApplicationException('Permission denied.');
+        }
+
+        $comment->delete();
+
+        $this->prepareWallStream();
     }
 
 }

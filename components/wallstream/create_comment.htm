@@ -1,0 +1,26 @@
+<div class="comment_create" id="post-{{ post.id }}-comment_create_form">
+    {{ form_ajax('onCreateComment', { 'success': "$('.comment_create textarea').val('');", update: { '@posts': '#wallStream'} }) }}
+    <input type="hidden" name="post_id" value="{{ post.id }}"/>
+    <div class="media" style="margin-top: 0">
+        <div class="pull-left">
+            <img
+                src="{{ user.getAvatarThumb('36') }}"
+                class="media-object img-rounded user-image"
+                alt="{{ user.name }}"/>
+        </div>
+        <div class="media-body">
+            <textarea
+                name="content"
+                id="post-{{ post.id }}-comment-content"
+                class="form-control"
+                rows="1"
+                placeholder="Write a comment..."></textarea>
+        </div>
+    </div>
+    <input
+        type="submit"
+        class="btn btn-small btn-primary"
+        style="opacity: 0; position: absolute; z-index: -900;"
+        value="Submit"/>
+    {{ form_close() }}
+</div>

@@ -90,6 +90,10 @@ class Profile extends ComponentBase
         if ($result = $this->checkUploadAction()) {
             return $result;
         }
+
+        $this->addJs('assets/vendor/dropzone/dropzone.js');
+        $this->addJs('assets/js/image-single.js');
+        $this->addCss('assets/css/uploader.css');
     }
 
     protected function prepareVars()

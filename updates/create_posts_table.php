@@ -12,7 +12,7 @@ class CreatePostsTable extends Migration
      */
     public function up()
     {
-        Schema::create('social_posts', function($table)
+        Schema::create('autumn_social_posts', function($table)
         {
             $table->engine = 'InnoDB';
             $table->increments('id');
@@ -30,7 +30,7 @@ class CreatePostsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('social_posts');
+        Schema::dropIfExists('autumn_social_posts');
     }
 
 }

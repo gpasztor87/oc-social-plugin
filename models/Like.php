@@ -13,7 +13,7 @@ class Like extends Model
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'user_likes';
+    public $table = 'autumn_social_likes';
 
     /**
      * @var array Hidden fields from array/json access

@@ -12,7 +12,7 @@ class CreateLikesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_likes', function($table)
+        Schema::create('autumn_social_likes', function($table)
         {
             $table->engine = 'InnoDB';
             $table->increments('id');
@@ -31,7 +31,7 @@ class CreateLikesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_likes');
+        Schema::dropIfExists('autumn_social_likes');
     }
 
 }

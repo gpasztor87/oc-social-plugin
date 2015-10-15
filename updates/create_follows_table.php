@@ -11,7 +11,7 @@ class CreateFollowsTable extends Migration
      * @return void
      */
     public function up() {
-        Schema::create('user_follows', function($table)
+        Schema::create('autumn_social_follows', function($table)
         {
             $table->engine = 'InnoDB';
             $table->increments('id');
@@ -29,7 +29,7 @@ class CreateFollowsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_follows');
+        Schema::dropIfExists('autumn_social_follows');
     }
 
 }

@@ -10,7 +10,7 @@ class Activity extends Model
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'social_activities';
+    public $table = 'autumn_social_activities';
 
     /**
      * The attributes that aren't mass assignable.

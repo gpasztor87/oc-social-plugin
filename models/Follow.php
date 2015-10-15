@@ -13,7 +13,7 @@ class Follow extends Model
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'user_follows';
+    public $table = 'autumn_social_follows';
 
     /**
      * @var array Hidden fields from array/json access

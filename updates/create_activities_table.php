@@ -12,7 +12,7 @@ class CreateActivitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('social_activities', function($table)
+        Schema::create('autumn_social_activities', function($table)
         {
             $table->engine = 'InnoDB';
             $table->increments('id');
@@ -31,7 +31,7 @@ class CreateActivitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('social_activities');
+        Schema::dropIfExists('autumn_social_activities');
     }
 
 }

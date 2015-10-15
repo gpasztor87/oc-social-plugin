@@ -42,7 +42,7 @@ class Plugin extends PluginBase
             $model->morphMany['followers'] = ['Autumn\Social\Models\Follow', 'name' => 'followable'];
             $model->belongsToMany['follows'] = [
                 'RainLab\User\Models\User',
-                'table'    => 'user_follows',
+                'table'    => 'autumn_social_follows',
                 'key'      => 'user_id',
                 'otherKey' => 'followable_id'
             ];
@@ -77,8 +77,8 @@ class Plugin extends PluginBase
                 return $query->paginate($perPage, $page);
             });
 
-            $model->addDynamicMethod('beforeCreate', function() {
-                $this->slug = Str::slug($this->username);
+            $model->addDynamicMethod('beforeCreate', function() use($model) {
+                $model->slug = Str::slug($model->username);
             });
 
             $model->addDynamicMethod('setUrl', function($pageName, $controller) use($model) {

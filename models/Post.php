@@ -15,7 +15,7 @@ class Post extends Model
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'social_posts';
+    public $table = 'autumn_social_posts';
 
     /**
      * @var array Validation rules

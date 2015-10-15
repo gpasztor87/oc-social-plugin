@@ -12,7 +12,7 @@ class CreateCommentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('social_comments', function($table)
+        Schema::create('autumn_social_comments', function($table)
         {
             $table->engine = 'InnoDB';
             $table->increments('id');
@@ -32,7 +32,7 @@ class CreateCommentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('social_comments');
+        Schema::dropIfExists('autumn_social_comments');
     }
 
 }

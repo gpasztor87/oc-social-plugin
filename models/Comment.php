@@ -14,7 +14,7 @@ class Comment extends Model
     /**
      * @var string The database table used by the model.
      */
-    protected $table = 'social_comments';
+    protected $table = 'autumn_social_comments';
 
     /**
      * @var array Hidden fields from array/json access

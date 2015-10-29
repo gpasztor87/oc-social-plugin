@@ -81,7 +81,8 @@ class ActivityStream extends ComponentBase
             $user = UserModel::whereSlug($this->property('slug'))->first();
             $activities = Activity::where('user_id', $user->id)
                 ->orderBy('created_at', 'desc')
-                ->paginate($this->property('limit'));
+                ->limit($this->property('limit'))
+                ->get();
         }
         elseif ($this->activityType == 'dashboard') {
             if (!$user = Auth::getUser()) {
@@ -92,7 +93,8 @@ class ActivityStream extends ComponentBase
 
             $activities = Activity::whereIn('user_id', $users)
                 ->orderBy('created_at', 'desc')
-                ->paginate($this->property('limit'));
+                ->limit($this->property('limit'))
+                ->get();
         }
 
         $this->activities = $this->page['activities'] = $activities;

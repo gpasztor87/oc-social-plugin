@@ -23,7 +23,9 @@ class Like extends Model
     /**
      * @var array Relations
      */
-    public $morphTo = ['likeable'];
+    public $morphTo = [
+        'likeable' => []
+    ];
 
     public $belongsTo = [
         'user' => ['RainLab\User\Models\User']
@@ -91,11 +93,6 @@ class Like extends Model
          * Extensibility
          */
         Event::fire('social.dislike', [$like, $likeable]);
-    }
-
-    public function getLikeableAttribute()
-    {
-        return call_user_func([$this->likeable_type, 'find'], $this->likeable_id);
     }
 
 } 

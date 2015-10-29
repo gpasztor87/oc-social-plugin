@@ -13,6 +13,12 @@ class Activity extends Model
     public $table = 'autumn_social_activities';
 
     /**
+     * @var array Hidden fields from array/json access
+     */
+    protected $hidden = ['subject_id', 'subject_type'];
+
+
+    /**
      * The attributes that aren't mass assignable.
      *
      * @var array
@@ -26,11 +32,8 @@ class Activity extends Model
         'user' => ['RainLab\User\Models\User']
     ];
 
-    public $morphTo = ['subject'];
-
-    public function getSubjectAttribute()
-    {
-        return call_user_func([$this->subject_type, 'find'], $this->subject_id);
-    }
+    public $morphTo = [
+        'subject' => []
+    ];
 
 }

@@ -23,7 +23,9 @@ class Follow extends Model
     /**
      * @var array Relations
      */
-    public $morphTo = ['followable'];
+    public $morphTo = [
+        'followable' => []
+    ];
 
     /**
      * @var array Relations
@@ -94,11 +96,6 @@ class Follow extends Model
          * Extensibility
          */
         Event::fire('social.unfollow', [$follow, $followable]);
-    }
-
-    public function getFollowableAttribute()
-    {
-        return call_user_func([$this->followable_type, 'find'], $this->followable_id);
     }
 
 } 

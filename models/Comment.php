@@ -31,7 +31,9 @@ class Comment extends Model
     /**
      * @var array Relations
      */
-    public $morphTo = ['commentable'];
+    public $morphTo = [
+        'commentable' => []
+    ];
 
     public $belongsTo = [
         'user' => ['RainLab\User\Models\User']
@@ -79,11 +81,6 @@ class Comment extends Model
         }
 
         return $this->user_id == $user->id;
-    }
-
-    public function getCommentableAttribute()
-    {
-        return call_user_func([$this->commentable_type, 'find'], $this->commentable_id);
     }
 
 } 

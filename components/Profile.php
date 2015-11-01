@@ -46,13 +46,15 @@ class Profile extends ComponentBase
      */
     public function init()
     {
-        $component = $this->addComponent(
-            'Responsiv\Uploader\Components\ImageUploader',
-            'imageUploader',
-            ['deferredBinding' => false, 'imageWidth' => 150, 'imageHeight' => 150]
-        );
+        if ($this->getProfile()->id == Auth::getUser()->id) {
+            $component = $this->addComponent(
+                'Responsiv\Uploader\Components\ImageUploader',
+                'imageUploader',
+                ['deferredBinding' => false, 'imageWidth' => 150, 'imageHeight' => 150]
+            );
 
-        $component->bindModel('avatar', Auth::getUser());
+            $component->bindModel('avatar', Auth::getUser());
+        }
     }
 
     /**

@@ -7,7 +7,7 @@
             {% for follow in profile.follows %}
                 <a href="{{ this.page.baseFileName|page({ slug: follow.slug })  }}">
                     <img
-                        src="{{ follow.getAvatarThumb('32') }}"
+                        src="{{ follow.getAvatarThumb(32) }}"
                         class="img-rounded img_margin"
                         data-toggle="tooltip"
                         data-placement="top"

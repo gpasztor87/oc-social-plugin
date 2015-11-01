@@ -14,7 +14,9 @@
         {% if user and user.id == profile.id %}
             {% component 'imageUploader' %}
         {% else %}
-            {% partial __SELF__ ~ '::avatar' image = profile.avatar %}
+            <img src="{{ profile.getAvatarThumb(150) }}"
+                alt="{{ profile.name }}"
+                class="img-rounded"/>
         {% endif %}
     </figure>
 </header>

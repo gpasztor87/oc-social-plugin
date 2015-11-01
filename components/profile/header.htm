@@ -12,18 +12,7 @@
     <figure class="image-upload-container profile-user-photo-container">
 
         {% if user and user.id == profile.id %}
-            <div
-                class="control-single-image-uploader {{ __SELF__.isPopulated('avatar') ? 'has-image' : '' }}"
-                data-handler="{{ __SELF__ ~ '::onUploadAvatar' }}"
-                data-update-partial="{{ __SELF__ ~ '::avatar' }}"
-                data-control="single-image-uploader"
-                data-max-size="{{ __SELF__.maxSize }}"
-                data-file-types="{{ __SELF__.fileTypes|join(', ') }}"
-                style="width:142px; height: 142px">
-                <div class="content" style="width: 140px; height: 140px;">
-                    {% partial __SELF__ ~ '::avatar' image = __SELF__.getPopulated('avatar') %}
-                </div>
-            </div>
+            {% component 'imageUploader' %}
         {% else %}
             {% partial __SELF__ ~ '::avatar' image = profile.avatar %}
         {% endif %}

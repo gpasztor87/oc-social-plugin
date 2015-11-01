@@ -8,28 +8,12 @@ use ApplicationException;
 
 class Profile extends ComponentBase
 {
-    use \Autumn\Social\Traits\ComponentUtils;
-
     /**
      * The user model used for display.
      *
      * @var \RainLab\User\Models\User
      */
     public $profile;
-
-    /**
-     * @var bool Has the model been bound.
-     */
-    protected $deferredBinding = false;
-
-    /**
-     * Supported file types.
-     *
-     * @var array
-     */
-    public $fileTypes;
-
-    public $maxSize;
 
     /**
      * Returns information about this component, including name and description.
@@ -53,18 +37,6 @@ class Profile extends ComponentBase
                 'description' => 'The URL route parameter used for looking up the profile by its slug.',
                 'type'        => 'string',
                 'default'     => '{{ :slug }}'
-            ],
-            'maxSize'     => [
-                'title'       => 'Max file size (MB)',
-                'description' => 'The maximum file size that can be uploaded in megabytes.',
-                'type'        => 'string',
-                'default'     => '5'
-            ],
-            'fileTypes'   => [
-                'title'       => 'Supported file types',
-                'description' => 'File extensions separated by commas (,) or star (*) to allow all types.',
-                'type'        => 'string',
-                'default'     => '.gif,.jpg,.jpeg,.png'
             ]
         ];
     }
@@ -74,9 +46,13 @@ class Profile extends ComponentBase
      */
     public function init()
     {
-        $this->bindModel('avatar', Auth::getUser());
-        $this->fileTypes = $this->processFileTypes();
-        $this->maxSize = $this->property('maxSize');
+        $component = $this->addComponent(
+            'Responsiv\Uploader\Components\ImageUploader',
+            'imageUploader',
+            ['deferredBinding' => false, 'imageWidth' => 150, 'imageHeight' => 150]
+        );
+
+        $component->bindModel('avatar', Auth::getUser());
     }
 
     /**
@@ -86,14 +62,6 @@ class Profile extends ComponentBase
     public function onRun()
     {
         $this->prepareVars();
-
-        if ($result = $this->checkUploadAction()) {
-            return $result;
-        }
-
-        $this->addJs('assets/vendor/dropzone/dropzone.js');
-        $this->addJs('assets/js/image-single.js');
-        $this->addCss('assets/css/uploader.css');
     }
 
     protected function prepareVars()
@@ -115,19 +83,6 @@ class Profile extends ComponentBase
 
         Follow::toggle($user, UserModel::find(input('id')));
         $this->prepareVars();
-    }
-
-    public function onUploadAvatar()
-    {
-        $image = $this->getPopulated();
-
-        if (($deleteId = input('id')) && input('mode') == 'delete') {
-            if ($deleteImage = $image->find($deleteId)) {
-                $deleteImage->delete();
-            }
-        }
-
-        $this->page['image'] = $image;
     }
 
 }

@@ -14,7 +14,7 @@ class Plugin extends PluginBase
     /**
      * @var array Plugin dependencies
      */
-    public $require = ['RainLab.User'];
+    public $require = ['RainLab.User', 'Responsiv.Uploader'];
 
     /**
      * Returns information about this plugin.

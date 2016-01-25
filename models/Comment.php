@@ -2,6 +2,7 @@
 
 use Auth;
 use Model;
+use Notification;
 
 /**
  * Comment model
@@ -15,6 +16,11 @@ class Comment extends Model
      * @var string The database table used by the model.
      */
     protected $table = 'autumn_social_comments';
+
+    /**
+     * @var array Guarded fields
+     */
+    protected $guarded = [];
 
     /**
      * @var array Hidden fields from array/json access
@@ -57,10 +63,12 @@ class Comment extends Model
     {
         $comment = new Comment;
         $comment->content = $content;
-        $comment->user = Auth::getUser();
+        $comment->user = $user = Auth::getUser();
         $comment->commentable_id = $commentable->id;
         $comment->commentable_type = get_class($commentable);
         $comment->save();
+
+        Notification::create('comment_posted', $user, $commentable, $commentable->user);
     }
 
     public function afterDelete()

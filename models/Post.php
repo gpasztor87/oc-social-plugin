@@ -140,7 +140,8 @@ class Post extends Model
     /**
      * Sets the "url" attribute with a URL to this object
      * @param string $pageName
-     * @param Cms\Classes\Controller $controller
+     * @param \Cms\Classes\Controller $controller
+     * @return string
      */
     public function setUrl($pageName, $controller)
     {

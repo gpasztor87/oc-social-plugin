@@ -46,7 +46,7 @@ class Profile extends ComponentBase
      */
     public function init()
     {
-        if ($this->getProfile()->id == Auth::getUser()->id) {
+        if (Auth::check() && $this->getProfile()->id == Auth::getUser()->id) {
             $component = $this->addComponent(
                 'Responsiv\Uploader\Components\ImageUploader',
                 'imageUploader',
@@ -69,6 +69,10 @@ class Profile extends ComponentBase
     protected function prepareVars()
     {
         $this->profile = $this->page['profile'] = $this->getProfile();
+
+        $notifications = Auth::getUser()->notifications;
+        $this->page['notifications'] = $notifications;
+        //dd($notifications);
     }
 
     protected function getProfile()

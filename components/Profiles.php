@@ -17,7 +17,7 @@ class Profiles extends ComponentBase
     /**
      * A collection of profiles to display.
      *
-     * @var Collection
+     * @var \October\Rain\Database\Collection
      */
     public $profiles;
 
@@ -54,7 +54,7 @@ class Profiles extends ComponentBase
         return [
             'noProfilesMessage'  => [
                 'title'       => 'No profiles message',
-                'description' => 'Message to display in the profiles list in case if there are no users. This property is used by the default component partial.',
+                'description' => 'Message to display in the profiles list in case if there are no users.',
                 'type'        => 'string',
                 'default'     => 'No users found'
             ],

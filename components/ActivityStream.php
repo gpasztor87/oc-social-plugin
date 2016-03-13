@@ -11,7 +11,7 @@ class ActivityStream extends ComponentBase
     /**
      * A collection of activities to display.
      *
-     * @var Collection
+     * @var \October\Rain\Database\Collection
      */
     public $activities;
 

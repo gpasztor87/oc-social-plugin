@@ -55,7 +55,7 @@ class Plugin extends PluginBase
     {
         return [
             'Autumn\Social\Notifications\CommentPosted' => 'comment_posted',
-            //'Autumn\Social\Notifications\PostLiked' => 'post_liked'
+            'Autumn\Social\Notifications\PostLiked' => 'post_liked'
         ];
     }
 

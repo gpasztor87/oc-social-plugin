@@ -2,6 +2,7 @@
 
 use Model;
 use Event;
+use Notification;
 
 /**
  * Like model
@@ -76,6 +77,7 @@ class Like extends Model
              * Extensibility
              */
             Event::fire('social.like', [$like, $likeable]);
+            Notification::create('post_liked', $user, $likeable, $likeable->user);
         }
 
     }
@@ -95,4 +97,4 @@ class Like extends Model
         Event::fire('social.dislike', [$like, $likeable]);
     }
 
-} 
+}

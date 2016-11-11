@@ -98,4 +98,4 @@ class Follow extends Model
         Event::fire('social.unfollow', [$follow, $followable]);
     }
 
-} 
+}

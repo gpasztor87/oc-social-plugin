@@ -91,4 +91,4 @@ class Comment extends Model
         return $this->user_id == $user->id;
     }
 
-} 
+}
